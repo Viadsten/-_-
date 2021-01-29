@@ -3,16 +3,23 @@ let input = document.querySelector('.input');
 let button = document.querySelector('.button');
 let result = document.querySelector('.result-check');
 let ValidVariable = [];
+let bracketCounter = 0;
 let open = ['{', '(', '['];
 let close = ['}', ')', ']'];
 
 button.onclick = function(){
     ValidVariable = [];
+
     if (input.value == ''){
         result.innerHTML = 'Введите строку'
-    }else{
+    }
+    else{
         if(bracketValidate() == false){
             result.innerHTML = 'False';
+        }
+        else if(bracketCounter == 0)
+        {
+            result.innerHTML = 'Строка не содержит скобок';
         }else{
             result.innerHTML = 'True';
         }
@@ -26,6 +33,7 @@ function bracketValidate(){
         for (let j = 0; j < open.length; j++){
             if (string[i].indexOf(open[j]) !== -1){
                 ValidVariable.push(string[i]);
+                bracketCounter++;
                 break;
             }
         }
@@ -34,6 +42,7 @@ function bracketValidate(){
             if (string[i].indexOf(close[j]) !== -1){
                 let openBracket = ValidVariable[ValidVariable.length - 1];
                 let closeBracket = string[i];
+                bracketCounter++;
                 if(close.indexOf(closeBracket) !== open.indexOf(openBracket)){
                     return(false)
                 }else{
